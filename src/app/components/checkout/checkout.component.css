@@ -1,0 +1,74 @@
+._Checkout {
+  width: 100%;
+  padding: 6rem 0 4rem; /* عشان مايغطيش الـ navbar */
+}
+
+._Checkout .container-fluid {
+  width: 90%;
+  padding: 2rem 0;
+}
+
+._CheckoutTitle h3 {
+  font-size: 1.7rem;
+  font-weight: 500;
+  color: var(--color-black);
+}
+
+.checkout-container {
+  background-color: #f7f6f7;
+  margin-bottom: 1rem;
+  padding: 1rem;
+  border-top: 2px solid var(--color-green);
+}
+
+.coupon-header {
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--color-black);
+}
+
+.coupon-link {
+  color: var(--color-green);
+  cursor: pointer;
+}
+
+._Coupon {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+._BtnShop {
+  display: flex;
+  justify-content: flex-start;
+}
+
+._BtnShop button {
+  background-color: var(--color-green);
+  border-radius: 0.4rem;
+  color: var(--color-white);
+  font-size: 1rem;
+  font-weight: 600;
+  padding: 0.5rem 1rem;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+._BtnShop button:hover {
+  background-color: transparent;
+  border: 1px solid var(--color-black);
+  color: var(--color-black);
+}
+
+._FormContent input:focus,
+._FormContent select:focus,
+._FormContent textarea:focus {
+  outline: none;
+  box-shadow: none;
+}
+
+.sticky-top {
+  z-index: 1 !important;
+}
