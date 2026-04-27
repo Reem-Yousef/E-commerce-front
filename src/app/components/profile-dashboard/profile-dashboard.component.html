@@ -5,7 +5,7 @@
       <span class="icon-bar icon-bar-2"></span>
       <span class="icon-bar icon-bar-3"></span>
     </button>
-    <div class="_SectionOne" #sideMenu>
+    <div class="_SectionOne" #sideMenu [class.show-sidebar]="isMenuOpen">
       <!-- <div class="_Logo">
         <a class="navbar-brand">
           <img src="../../../assets/images/HeroIconLogoWhite.png" alt="Logo Image" style="max-width: 40px" />
@@ -13,7 +13,7 @@
         </a>
       </div> -->
       <div class="_Links">
-        <a class="_List" [routerLink]="['userinfo']" routerLinkActive="_active">
+        <a class="_List" [routerLink]="['userinfo']" routerLinkActive="_active" (click)="isMenuOpen = false">
           <span class="_Image">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="#fff"
               class="size-6">
@@ -25,7 +25,7 @@
             <p>Your Information</p>
           </span>
         </a>
-        <a class="_List" [routerLink]="['edit-user']" routerLinkActive="_active">
+        <a class="_List" [routerLink]="['edit-user']" routerLinkActive="_active" (click)="isMenuOpen = false">
           <span class="_Image">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="#fff"
               class="size-6">
@@ -37,7 +37,7 @@
             <p>Edit Information</p>
           </span>
         </a>
-        <a class="_List" [routerLink]="['orders']" routerLinkActive="_active">
+        <a class="_List" [routerLink]="['orders']" routerLinkActive="_active" (click)="isMenuOpen = false">
           <span class="_Image">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="#fff"
               class="size-6">

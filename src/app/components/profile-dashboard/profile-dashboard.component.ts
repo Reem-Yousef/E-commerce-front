@@ -2,7 +2,7 @@ import { Component, ElementRef, ViewChild } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { filter } from 'rxjs/operators';
 import { AuthService } from '../../services/auth.service';
-import { ProfileService } from '../../services/porpfile.service';
+import { ProfileService } from '../../services/profile.service';
 
 @Component({
   selector: 'app-profile-dashboard',
@@ -12,9 +12,10 @@ import { ProfileService } from '../../services/porpfile.service';
 export class ProfileDashboardComponent {
   @ViewChild('sideMenu') sideMenu!: ElementRef;
 
+  isMenuOpen: boolean = false;
+  
   toggleMenuInDahBoard(): void {
-    const el = this.sideMenu.nativeElement as HTMLElement;
-    el.style.display = el.style.display === 'flex' ? 'none' : 'flex';
+    this.isMenuOpen = !this.isMenuOpen;
   }
 
   currentSection: string = '';
@@ -48,11 +49,11 @@ export class ProfileDashboardComponent {
   onLogout() {
     this.authService.logout().subscribe({
       next: () => {
-        localStorage.removeItem('token');
         this.router.navigate(['/signin']);
       },
       error: (err) => {
         console.error('Logout failed:', err);
+        this.router.navigate(['/signin']);
       },
     });
   }

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ProfileService } from '../../../services/porpfile.service';
+import { ProfileService } from '../../../services/profile.service';
 
 export interface User {
   _id: string;

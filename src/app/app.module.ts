@@ -15,7 +15,8 @@ import { UserInfoComponent } from './components/profile-dashboard/user-info/user
 import { EditUserComponent } from './components/profile-dashboard/edit-user/edit-user.component';
 import { OrdersOfUserComponent } from './components/profile-dashboard/orders-of-user/orders-of-user.component';
 import { TrimStr } from '../app/pipes/trim';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { AuthInterceptor } from './interceptors/auth.interceptor';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms'
 import { ProductListComponent } from './components/product-list/product-list.component';
 import { ProductDetailComponent } from './components/product-detail/product-detail.component';
@@ -66,7 +67,12 @@ import { PaymentCancelComponent } from './components/checkout/payment-cancel/pay
     PaymentSuccessComponent,
     PaymentCancelComponent
   ],
-  providers: [ProductService, CartService, CartNotificationService],
+  providers: [
+    ProductService, 
+    CartService, 
+    CartNotificationService,
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

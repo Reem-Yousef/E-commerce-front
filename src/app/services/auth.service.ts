@@ -6,7 +6,7 @@ import { Observable, tap } from 'rxjs';
   providedIn: 'root',
 })
 export class AuthService {
-  private baseUrl = 'http://127.0.0.1:5000/api/auth'
+  private baseUrl = 'http://localhost:5000/api/auth'
   // 'https://e-commerce-back-end-khaki-two.vercel.app/api/auth';
 
   constructor(private http: HttpClient) {}
@@ -26,15 +26,16 @@ export class AuthService {
       })
     );
   }
-  logout() {
-    return this.http.post(
-      `${this.baseUrl}/logout`,
-      {},
-      {
-        headers: {
-          Authorization: `${localStorage.getItem('token')}`,
-        },
-      }
+  logout(): Observable<any> {
+    const token = localStorage.getItem('token');
+    return this.http.post(`${this.baseUrl}/logout`, {}, {
+      headers: { Authorization: `${token}` }
+    }).pipe(
+      tap({
+        next: () => localStorage.removeItem('token'),
+        error: () => localStorage.removeItem('token'),
+        complete: () => localStorage.removeItem('token')
+      })
     );
   }
 

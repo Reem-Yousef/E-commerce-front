@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
-import { ProfileService } from '../../../services/porpfile.service';
+import { ProfileService } from '../../../services/profile.service';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
 

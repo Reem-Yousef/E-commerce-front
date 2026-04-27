@@ -18,7 +18,13 @@ export class SignInComponent implements AfterViewInit {
   password = '';
   errorMsg = '';
   rememberMe = false;
+  isPasswordVisible = false;
+
   constructor(private authService: AuthService, private router: Router) {}
+
+  togglePasswordVisibility() {
+    this.isPasswordVisible = !this.isPasswordVisible;
+  }
 
   onSubmit() {
     this.authService

@@ -24,7 +24,7 @@
         .product-list-container {
             width: 100%;
             margin: 0 auto;
-            padding: 5rem 5rem;
+            padding: 4.4rem 5rem 5rem; /* Match navbar height for top padding */
             box-sizing: border-box;
         }
 

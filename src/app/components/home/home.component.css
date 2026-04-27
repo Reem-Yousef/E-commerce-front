@@ -1,7 +1,8 @@
 ._HeroContainer {
     position: relative;
     width: 100%;
-    height: 100vh;
+    height: calc(100vh - 4.4rem); /* Adjust height to account for navbar */
+    margin-top: 4.4rem; /* Start after navbar */
     background-image: url(../../../assets/images/home-hero-bg.jpg);
     background-repeat: no-repeat;
     background-position: center;

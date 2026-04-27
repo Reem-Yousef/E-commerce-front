@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ProfileService } from '../../../services/porpfile.service';
+import { ProfileService } from '../../../services/profile.service';
 
 interface Product {
   _id: string;
