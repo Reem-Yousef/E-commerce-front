@@ -18,6 +18,24 @@
       </div>
 
       <ng-container *ngFor="let order of orders">
+        <!-- Order Header Row -->
+        <tr class="order-header-row" style="background-color: #f1f3f5; font-weight: bold;">
+          <td colspan="4" style="padding: 10px 15px; border-bottom: 2px solid #dee2e6;">
+            Order ID: {{ order._id | slice:-8 }}... | 
+            Date: {{ order.orderedAt | date:'medium' }} | 
+            Status: <span [class.text-success]="order.deliveryStatus === 'completed'" [class.text-warning]="order.deliveryStatus === 'pending'">
+              {{ order.deliveryStatus | titlecase }}
+            </span>
+            <button *ngIf="order.deliveryStatus === 'pending'" 
+                    (click)="deleteOrder(order._id)"
+                    class="btn btn-sm btn-outline-danger" 
+                    style="float: right; margin-top: -5px;">
+              Delete Order
+            </button>
+          </td>
+        </tr>
+        
+        <!-- Order Items Rows -->
         <tr class="_oneOrderInResponsive" *ngFor="let item of order.items">
           <td class="_OneOrderInTable">
             <div class="_OneOrder">

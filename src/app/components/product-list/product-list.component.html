@@ -3,10 +3,10 @@
     <div class="product-header">
       <div class="product-container-header">
         <div class="title">
-          <span>Shop</span>
+          <span>Explore Our Shop</span>
         </div>
 
-        <!-- Search Section -->
+        <!-- Search Bar -->
         <div class="search-section">
           <div class="search-container">
             <div class="search-input-wrapper">
@@ -38,10 +38,7 @@
 
             <!-- Search Suggestions -->
             <div *ngIf="showSuggestions && searchSuggestions.length > 0" class="suggestions-dropdown">
-              <div
-                *ngFor="let suggestion of searchSuggestions"
-                (click)="selectSuggestion(suggestion)"
-                class="suggestion-item">
+              <div *ngFor="let suggestion of searchSuggestions" (click)="selectSuggestion(suggestion)" class="suggestion-item">
                 {{ suggestion }}
               </div>
             </div>
@@ -50,94 +47,65 @@
       </div>
     </div>
 
-    <!-- Filters and Controls Section -->
-    <div class="filters-section">
-      <div class="results-info">
-        <span *ngIf="!loading">
-          Showing {{ resultsCount }} of {{ totalResults }} results
-          <span *ngIf="searchQuery"> for "{{ searchQuery }}"</span>
-        </span>
-        <span *ngIf="loading">Loading...</span>
-      </div>
+    <!-- Filters Bar -->
+    <div class="filters-bar">
+      <div class="filters-container">
+        <div class="filter-group">
+          <div class="filter-item">
+            <label>Brand</label>
+            <select [(ngModel)]="selectedBrand" (change)="onBrandChange($event)" class="dropdown">
+              <option value="">All Brands</option>
+              <option *ngFor="let brand of brands" [value]="brand">{{ brand }}</option>
+            </select>
+          </div>
 
-      <div class="controls-row">
-        <!-- Brand Filter -->
-        <div class="brand-filter">
-          <select
-            [(ngModel)]="selectedBrand"
-            (change)="onBrandChange($event)"
-            class="brand-dropdown dropdown">
-            <option value="">All Brands</option>
-            <option *ngFor="let brand of brands" [value]="brand">{{ brand }}</option>
-          </select>
-        </div>
+          <div class="filter-item">
+            <label>Price Range</label>
+            <div class="price-inputs">
+              <input type="number" [(ngModel)]="minPrice" (change)="onPriceRangeChange()" [placeholder]="'Min'" class="price-input">
+              <span class="sep">-</span>
+              <input type="number" [(ngModel)]="maxPrice" (change)="onPriceRangeChange()" [placeholder]="'Max'" class="price-input">
+            </div>
+          </div>
 
-        <!-- Price Range Filter -->
-        <div class="price-filter">
-          <div class="price-inputs">
-            <input
-              type="number"
-              [(ngModel)]="minPrice"
-              (change)="onPriceRangeChange()"
-              [placeholder]="'Min: $ ' + priceRange.min"
-              class="price-input"
-              min="0">
-            <span class="price-separator">-</span>
-            <input
-              type="number"
-              [(ngModel)]="maxPrice"
-              (change)="onPriceRangeChange()"
-              [placeholder]="'Max: $' + priceRange.max"
-              class="price-input"
-              min="0">
+          <div class="filter-item">
+            <label>Rating</label>
+            <select [(ngModel)]="minRating" (change)="onRatingChange()" class="dropdown">
+              <option [ngValue]="null">Any Rating</option>
+              <option [ngValue]="4">4+ Stars</option>
+              <option [ngValue]="3">3+ Stars</option>
+              <option [ngValue]="2">2+ Stars</option>
+            </select>
+          </div>
+
+          <div class="filter-item">
+            <label>Sort By</label>
+            <select [(ngModel)]="selectedSort" (change)="onSortChange(selectedSort)" class="dropdown">
+              <option *ngFor="let option of sortOptions" [value]="option.value">{{ option.label }}</option>
+            </select>
           </div>
         </div>
 
-        <!-- Stock Filter -->
-        <div class="stock-filter">
-          <label class="checkbox-label">
-            <input
-              type="checkbox"
-              [(ngModel)]="inStockOnly"
-              (change)="onInStockChange()"
-              class="checkbox-input">
-            <span class="checkbox-text">In Stock Only</span>
-          </label>
-        </div>
+        <div class="filter-actions">
+          <div class="stock-toggle">
+            <label class="switch">
+              <input type="checkbox" [(ngModel)]="inStockOnly" (change)="onInStockChange()">
+              <span class="slider round"></span>
+            </label>
+            <span class="toggle-label">In Stock</span>
+          </div>
 
-        <!-- Rating Filter -->
-        <div class="rating-filter">
-          <select
-            [(ngModel)]="minRating"
-            (change)="onRatingChange()"
-            class="rating-dropdown dropdown">
-            <option [ngValue]="null">Any Rating</option>
-            <option [ngValue]="4">4+ Stars</option>
-            <option [ngValue]="3">3+ Stars</option>
-            <option [ngValue]="2">2+ Stars</option>
-            <option [ngValue]="1">1+ Stars</option>
-          </select>
+          <button (click)="clearFilters()" class="clear-all-btn" *ngIf="selectedBrand || minPrice || maxPrice || inStockOnly || minRating">
+            Clear All
+          </button>
         </div>
+      </div>
 
-        <!-- Sort Controls -->
-        <div class="sort-controls">
-          <select
-            [(ngModel)]="selectedSort"
-            (change)="onSortChange(selectedSort)"
-            class="sort-dropdown dropdown">
-            <option *ngFor="let option of sortOptions" [value]="option.value">
-              {{ option.label }}
-            </option>
-          </select>
-        </div>
-
-        <!-- Clear Filters -->
-        <button
-          (click)="clearFilters()"
-          class="clear-filters-btn"
-          *ngIf="selectedBrand || minPrice || maxPrice || inStockOnly || minRating">
-          Clear Filters
-        </button>
+      <div class="results-summary">
+        <p *ngIf="!loading">
+          Showing <strong>{{ resultsCount }}</strong> of {{ totalResults }} items
+          <span *ngIf="searchQuery">for "<i>{{ searchQuery }}</i>"</span>
+        </p>
       </div>
     </div>
   </div>

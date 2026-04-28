@@ -21,6 +21,7 @@ interface Order {
   total: number;
   orderedAt: Date;
   status: string;
+  deliveryStatus: string;
 }
 
 @Component({
@@ -36,12 +37,11 @@ export class OrdersOfUserComponent implements OnInit {
   constructor(private orderService: ProfileService) {}
 
   ngOnInit(): void {
+    this.loadOrders();
+  }
+  loadOrders(): void {
     this.orderService.getUserOrders().subscribe({
       next: (res: any) => {
-        console.log('User Orders Response:', res);
-
-        // ✅ هنا التعديل الأساسي
-        // لو الباك بيرجع object زي { orders: [...] }
         if (res && Array.isArray(res)) {
           this.orders = res;
         } else if (res && Array.isArray(res.orders)) {
@@ -49,7 +49,6 @@ export class OrdersOfUserComponent implements OnInit {
         } else {
           this.orders = [];
         }
-
         this.isLoading = false;
       },
       error: (err) => {
@@ -57,6 +56,33 @@ export class OrdersOfUserComponent implements OnInit {
         this.isLoading = false;
         console.error(err);
       },
+    });
+  }
+
+  deleteOrder(orderId: string): void {
+    import('sweetalert2').then((Swal) => {
+      Swal.default.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          this.orderService.deleteOrder(orderId).subscribe({
+            next: () => {
+              Swal.default.fire('Deleted!', 'Your order has been deleted.', 'success');
+              this.loadOrders();
+            },
+            error: (err) => {
+              Swal.default.fire('Error!', 'Failed to delete order.', 'error');
+              console.error(err);
+            }
+          });
+        }
+      });
     });
   }
 }

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { WishlistService } from '../../services/wishlist.service';
-import { trigger, transition, style, animate } from '@angular/animations';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-wishlist',
@@ -11,10 +11,17 @@ export class WishlistComponent implements OnInit {
   wishlist: any[] = [];
   loading = false;
 
-  constructor(private wishlistService: WishlistService) {}
+  constructor(
+    private wishlistService: WishlistService,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
     this.loadWishlist();
+  }
+
+  navigateToProduct(productId: string) {
+    this.router.navigate(['/product', productId]);
   }
 
   loadWishlist() {
@@ -37,11 +44,9 @@ export class WishlistComponent implements OnInit {
     this.wishlistService.removeFromWishlist(productId).subscribe({
       next: () => {
         // Update local state immediately for better UX
-        this.wishlist = this.wishlist.filter(item => item._id !== productId);
-        // Update the service state
+        this.wishlist = this.wishlist.filter(item => item.product._id !== productId);
+        // Update the service state so heart icons update elsewhere
         this.wishlistService.updateWishlistState(productId, false);
-        // Optionally reload to ensure consistency
-        // this.loadWishlist();
       },
       error: (err) => {
         console.error('Remove failed', err);

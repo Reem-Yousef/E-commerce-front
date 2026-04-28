@@ -24,26 +24,16 @@ export class WishlistService {
     }
   }
 
-  private getHeaders(): { headers: HttpHeaders } {
-    const token = localStorage.getItem('token');
-    return {
-      headers: new HttpHeaders({
-        "Authorization": `${token}`,
-        'Content-Type': 'application/json',
-      }),
-    };
-  }
-
   getWishlist(): Observable<any> {
-    return this.http.get(this.baseUrl, this.getHeaders());
+    return this.http.get(this.baseUrl);
   }
 
   addToWishlist(productId: string): Observable<any> {
-    return this.http.post(this.baseUrl, { productId }, this.getHeaders());
+    return this.http.post(this.baseUrl, { productId });
   }
 
   removeFromWishlist(productId: string): Observable<any> {
-    return this.http.delete(`${this.baseUrl}/${productId}`, this.getHeaders());
+    return this.http.delete(`${this.baseUrl}/${productId}`);
   }
 
   // Method to check if product is in wishlist
@@ -62,12 +52,12 @@ export class WishlistService {
 
     this.getWishlist().subscribe({
       next: (res) => {
-        const productIds = res.products?.map((product: any) => product._id || product.productId) || [];
+        // Map to product._id because products is an array of { product: { _id, ... }, addedAt }
+        const productIds = res.products?.map((item: any) => item.product?._id || item.product) || [];
         this.wishlistItemsSubject.next(productIds);
       },
       error: (err) => {
         console.error('Error loading wishlist items:', err);
-        // Don't clear wishlist on error unless it's authentication error
         if (err.status === 401 || err.status === 403) {
           this.wishlistItemsSubject.next([]);
         }
@@ -77,7 +67,7 @@ export class WishlistService {
 
   // Method to toggle wishlist status using the backend toggle endpoint
   toggleWishlist(productId: string): Observable<any> {
-    return this.http.post(this.baseUrl, { productId }, this.getHeaders());
+    return this.http.post(this.baseUrl, { productId });
   }
 
   // Method to update local wishlist state

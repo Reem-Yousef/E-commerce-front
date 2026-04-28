@@ -29,13 +29,9 @@ export class ProfileService {
     return this.http.put(`${this.baseUrl}/${userId}`, data);
   }
   getUserOrders() {
-    const token = localStorage.getItem('token');
-    if (!token) throw new Error('Token not found');
-
-    const headers = {
-      Authorization: `${token}`,
-    };
-
-    return this.http.get(`${this.ordersUrl}/orders`, { headers });
+    return this.http.get(`${this.ordersUrl}/orders`);
+  }
+  deleteOrder(orderId: string): Observable<any> {
+    return this.http.delete(`${this.ordersUrl}/${orderId}`);
   }
 }

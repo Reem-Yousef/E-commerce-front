@@ -1,19 +1,40 @@
-<div class="wishlist-page">
-  <h2>My Wishlist</h2>
+<div class="wishlist-container">
+  <div class="wishlist-page">
+    <h2>My Wishlist</h2>
 
-  <div *ngIf="loading">Loading wishlist...</div>
+    <div *ngIf="loading" class="loading-state">
+      <div class="spinner"></div>
+      <p>Loading your wishlist...</p>
+    </div>
 
-  <div *ngIf="!loading && wishlist.length === 0" class="empty-message">
-    You don’t have any items in your wishlist.
-  </div>
+    <div *ngIf="!loading && wishlist.length === 0" class="empty-message">
+      <div class="empty-icon">❤️</div>
+      <h3>Your wishlist is empty</h3>
+      <p>Looks like you haven't added anything to your wishlist yet.</p>
+      <button routerLink="/shop" class="shop-now-btn">Go Shopping</button>
+    </div>
 
-  <div *ngIf="wishlist.length > 0" class="wishlist-grid">
-    <div class="wishlist-item" *ngFor="let item of wishlist">
-      <img [src]="item.product.images[0]" alt="{{ item.product.title }}" />
-      <div class="wishlist-content">
-        <h4>{{ item.product.title }}</h4>
-        <p>{{ item.product.price | currency }}</p>
-        <button (click)="removeItem(item._id)">Remove</button>
+    <div *ngIf="wishlist.length > 0" class="wishlist-grid">
+      <div class="wishlist-card" *ngFor="let item of wishlist">
+        <div class="product-image">
+          <img [src]="item.product.images[0]" alt="{{ item.product.title }}" />
+          <button class="remove-btn" (click)="removeItem(item.product._id)" title="Remove from wishlist">
+            <span>✕</span>
+          </button>
+        </div>
+        
+        <div class="wishlist-content">
+          <div class="category">{{ item.product.category || 'Product' }}</div>
+          <h4 class="title">{{ item.product.title }}</h4>
+          <p class="description">{{ item.product.description | slice:0:60 }}{{ item.product.description.length > 60 ? '...' : '' }}</p>
+          
+          <div class="price-action">
+            <span class="price">{{ item.product.price | currency }}</span>
+            <button class="add-to-cart" (click)="$event.stopPropagation(); navigateToProduct(item.product._id)">
+              View Details
+            </button>
+          </div>
+        </div>
       </div>
     </div>
   </div>

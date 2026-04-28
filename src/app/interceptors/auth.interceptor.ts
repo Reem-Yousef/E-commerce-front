@@ -16,21 +16,27 @@ export class AuthInterceptor implements HttpInterceptor {
   constructor(private router: Router) {}
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
+    const token = localStorage.getItem('token');
+    
+    // Inject token if it exists
+    if (token) {
+      request = request.clone({
+        setHeaders: {
+          Authorization: token
+        }
+      });
+    }
+
     return next.handle(request).pipe(
       catchError((error: HttpErrorResponse) => {
-        if (error.status === 401 || error.status === 403 || (error.status === 404 && error.url?.includes('/userInfo/user/'))) {
+        // Handle 401 Unauthorized or 403 Forbidden
+        if (error.status === 401 || error.status === 403) {
           const errorMessage = error.error?.message || '';
+          console.warn('Authentication issue detected, clearing session:', errorMessage);
           
-          // Check if it's a user not found or auth issue
-          if (
-            errorMessage.toLowerCase().includes('user not found') || 
-            errorMessage.toLowerCase().includes('invalid token') ||
-            errorMessage.toLowerCase().includes('expired') ||
-            error.status === 401 ||
-            error.status === 403
-          ) {
-            console.warn('Authentication issue detected, clearing session:', errorMessage);
-            localStorage.removeItem('token');
+          localStorage.removeItem('token');
+          // Only redirect to signin if we are not already there
+          if (!this.router.url.includes('/signin')) {
             this.router.navigate(['/signin']);
           }
         }

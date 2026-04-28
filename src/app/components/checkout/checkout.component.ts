@@ -153,13 +153,6 @@ export class CheckoutComponent implements OnInit {
     };
   }
 
-  private getAuthHeaders(): HttpHeaders {
-    const token = localStorage.getItem('token');
-    return new HttpHeaders({
-      'Authorization': token || '',
-      'Content-Type': 'application/json'
-    });
-  }
 
   processPaymentWithValidation(form: NgForm): void {
     if (form.invalid) {
@@ -199,11 +192,10 @@ export class CheckoutComponent implements OnInit {
     }
 
     const orderPayload = this.createOrderPayload();
-    const headers = this.getAuthHeaders();
     this.isProcessingOrder = true;
     this.errorMessage = '';
 
-    this.http.post(`${environment.apiUrl}/order/checkout`, orderPayload, { headers }).subscribe({
+    this.http.post(`${environment.apiUrl}/order/checkout`, orderPayload).subscribe({
       next: (res: any) => {
         Swal.fire({ 
           icon: 'success', 
@@ -263,12 +255,10 @@ export class CheckoutComponent implements OnInit {
 
     try {
       const orderPayload = this.createOrderPayload();
-      const headers = this.getAuthHeaders();
       const session = await lastValueFrom(
         this.http.post<StripeSessionResponse>(
           `${environment.apiUrl}/order/create-checkout-session`,
           orderPayload,
-          { headers }
         )
       );
 
