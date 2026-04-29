@@ -11,7 +11,7 @@
       <div class="empty-icon">❤️</div>
       <h3>Your wishlist is empty</h3>
       <p>Looks like you haven't added anything to your wishlist yet.</p>
-      <button routerLink="/shop" class="shop-now-btn">Go Shopping</button>
+      <button [routerLink]="['/products']" class="shop-now-btn">Go Shopping</button>
     </div>
 
     <div *ngIf="wishlist.length > 0" class="wishlist-grid">
