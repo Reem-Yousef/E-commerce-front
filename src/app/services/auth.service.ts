@@ -1,12 +1,15 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, tap } from 'rxjs';
+import { environment } from '../enviroments/enviroment';
+
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  private baseUrl = 'http://localhost:5000/api/auth'
+  // private baseUrl = 'http://localhost:5000/api/auth'
+  private baseUrl = `${environment.apiUrl}/auth`;
   // 'https://e-commerce-back-end-khaki-two.vercel.app/api/auth';
 
   constructor(private http: HttpClient) {}

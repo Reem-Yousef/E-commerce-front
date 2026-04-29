@@ -1,10 +1,11 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, BehaviorSubject } from 'rxjs';
+import { environment } from '../enviroments/enviroment';
 
 @Injectable({ providedIn: 'root' })
 export class WishlistService {
-  private baseUrl ='http://localhost:5000/api/wishlist'
+  private baseUrl =`${environment.apiUrl}/wishlist`
     // 'https://e-commerce-back-end-khaki-two.vercel.app/api/wishlist';
   
   // Add BehaviorSubject to track wishlist items

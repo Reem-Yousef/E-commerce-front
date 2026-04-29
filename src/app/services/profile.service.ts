@@ -2,14 +2,15 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { jwtDecode } from 'jwt-decode';
 import { Observable } from 'rxjs';
+import { environment } from '../enviroments/enviroment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ProfileService {
-  private baseUrl = 'http://localhost:5000/api/userInfo/user'
+  private baseUrl = `${environment.apiUrl}/userInfo/user`
     // 'https://e-commerce-back-end-khaki-two.vercel.app/api/userInfo/user';
-  private ordersUrl = 'http://localhost:5000/api/order'
+  private ordersUrl = `${environment.apiUrl}/order`
     // 'https://e-commerce-back-end-khaki-two.vercel.app/api/order';
 
   constructor(private http: HttpClient) {}

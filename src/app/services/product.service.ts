@@ -11,13 +11,14 @@ import {
   SearchSuggestionsResponse
 } from '../models/product.model';
 import { HttpHeaders } from '@angular/common/http';
+import { environment } from '../enviroments/enviroment';
 
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProductService {
-  private apiUrl = 'http://localhost:5000/api';
+  private apiUrl = `${environment.apiUrl}`;
   // private apiUrl = 'https://e-commerce-back-end-khaki-two.vercel.app/api';
 
   constructor(private http: HttpClient) { }

@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { Observable, BehaviorSubject, throwError, of } from 'rxjs';
 import { tap, catchError, switchMap } from 'rxjs/operators';
+import { environment } from '../enviroments/enviroment';
 
 export interface CartItem {
   product: {
@@ -29,7 +30,7 @@ export interface Cart {
   providedIn: 'root'
 })
 export class CartService {
-  private apiUrl = 'http://localhost:5000/api/cart';
+  private apiUrl = `${environment.apiUrl}/cart`;
   // private apiUrl = 'https://e-commerce-back-end-khaki-two.vercel.app/api/cart';
   private cartSubject = new BehaviorSubject<Cart | null>(null);
   public cart$ = this.cartSubject.asObservable();

@@ -12,7 +12,7 @@ import { environment } from '../enviroments/enviroment';
   providedIn: 'root',
 })
 export class CustomerService {
-  private apiUrl = 'http://localhost:5000/api/';
+  private apiUrl = `${environment.apiUrl}`;
   // private apiUrl = 'https://e-commerce-back-end-khaki-two.vercel.app/api';
   private readonly PRODUCT_URL = `${this.apiUrl}/products`;
   private readonly USER_URL = `${this.apiUrl}/userInfo`;
