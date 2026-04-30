@@ -11,17 +11,7 @@
           <span>TreeNature</span>
         </a>
 
-        <!-- Natural Profile Icon next to Logo -->
-        <!-- <div class="nav-profile-next-logo" *ngIf="authService.isAuthenticated()">
-          <a [routerLink]="['/dashboard']" title="My Profile" class="profile-icon-link">
-            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="user-icon">
-              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-              <circle cx="12" cy="7" r="4"></circle>
-            </svg>
-          </a>
-        </div> -->
 
-        <!-- Natural Profile Icon next to Logo -->
 <div class="nav-profile-next-logo" *ngIf="authService.isAuthenticated() && !isProfilePage()">
   <a [routerLink]="['/dashboard']" title="My Profile" class="profile-icon-link">
     <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="user-icon">
@@ -33,21 +23,29 @@
 
 
       </div>
-      <button
-        class="navbar-toggler"
-        type="button"
-        data-bs-toggle="collapse"
-        data-bs-target="#mainMenu"
-        aria-controls="mainMenu"
-        aria-expanded="false"
-        aria-label="Toggle navigation"
-      >
-        <span class="icon-bar icon-bar-1"></span>
-        <span class="icon-bar icon-bar-2"></span>
-        <span class="icon-bar icon-bar-3"></span>
-      </button>
+    <button
+  class="navbar-toggler"
+  type="button"
+  #navbarToggler
+  (click)="toggleNavbar()"
+  data-bs-toggle="collapse"
+  data-bs-target="#mainMenu"
+  aria-controls="mainMenu"
+  [attr.aria-expanded]="isMenuOpen"
+  aria-label="Toggle navigation"
+>
+  <span class="icon-bar icon-bar-1"></span>
+  <span class="icon-bar icon-bar-2"></span>
+  <span class="icon-bar icon-bar-3"></span>
+</button>
 
-      <div class="collapse navbar-collapse" id="mainMenu">
+<div 
+  class="collapse navbar-collapse" 
+  id="mainMenu" 
+  #mainMenu
+  [class.show]="isMenuOpen"
+>
+
       <ul class="navbar-nav ms-auto text-uppercase f1">
           <li class="nav-item">
             <a
@@ -80,15 +78,7 @@
               >shop</a
             >
           </li>
-          <!-- <li class="nav-item">
-            <a
-              [routerLink]="['/teams']"
-              routerLinkActive="active"
-              class="nav-link"
-              (click)="closeNavbar()"
-              >team</a
-            >
-          </li> -->
+          
           <li class="nav-item">
             <a
               [routerLink]="['/contactUs']"

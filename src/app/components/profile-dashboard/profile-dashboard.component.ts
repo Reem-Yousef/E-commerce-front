@@ -1,4 +1,4 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { Component, ElementRef, ViewChild,HostListener } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { filter } from 'rxjs/operators';
 import { AuthService } from '../../services/auth.service';
@@ -10,17 +10,16 @@ import { ProfileService } from '../../services/profile.service';
   styleUrls: ['./profile-dashboard.component.css'],
 })
 export class ProfileDashboardComponent {
-  @ViewChild('sideMenu') sideMenu!: ElementRef;
+@ViewChild('sideMenu') sideMenu!: ElementRef;
+@ViewChild('toggler') toggler!: ElementRef; 
 
   isMenuOpen: boolean = false;
   
-  toggleMenuInDahBoard(): void {
-    this.isMenuOpen = !this.isMenuOpen;
-  }
 
   currentSection: string = '';
 
   constructor(
+    private el: ElementRef,
     private router: Router,
     private route: ActivatedRoute,
     public authService: AuthService,
@@ -44,6 +43,28 @@ export class ProfileDashboardComponent {
             this.currentSection = 'Dashboard';
         }
       });
+  }
+
+@HostListener('document:click', ['$event'])
+onClickOutside(event: Event) {
+  if (!this.isMenuOpen) return; // لو مقفول متعملش حاجة
+
+  const clickedElement = event.target as HTMLElement;
+
+  // التحقق: هل الضغطة كانت جوه السايد بار نفسه؟
+  const clickedInsideSidebar = this.sideMenu.nativeElement.contains(clickedElement);
+  
+  // التحقق: هل الضغطة كانت على الزرار اللي بيفتح؟
+  const clickedOnToggler = this.toggler.nativeElement.contains(clickedElement);
+
+  // لو الضغطة مش جوه السايد بار ومش على الزرار.. اقفل
+  if (!clickedInsideSidebar && !clickedOnToggler) {
+    this.isMenuOpen = false;
+  }
+  }
+
+  toggleMenuInDahBoard(): void {
+    this.isMenuOpen = !this.isMenuOpen;
   }
 
   onLogout() {

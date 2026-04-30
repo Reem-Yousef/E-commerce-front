@@ -1,6 +1,6 @@
 <div class="_Container">
   <div class="_SubContainer">
-    <button class="navbar-toggler" type="button" (click)="toggleMenuInDahBoard()">
+    <button #toggler class="navbar-toggler" type="button" (click)="toggleMenuInDahBoard()">
       <span class="icon-bar icon-bar-1"></span>
       <span class="icon-bar icon-bar-2"></span>
       <span class="icon-bar icon-bar-3"></span>
@@ -12,6 +12,7 @@
           <span>TreeNature</span>
         </a>
       </div> -->
+      
       <div class="_Links">
         <a class="_List" [routerLink]="['userinfo']" routerLinkActive="_active" (click)="isMenuOpen = false">
           <span class="_Image">
