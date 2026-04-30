@@ -13,19 +13,16 @@
     <div class="_footerLinks">
       <ul class="navbar-nav ms-auto text-uppercase f1">
         <li class="nav-item">
-          <a [routerLink]="['/']" class="nav-link active active-first">home</a>
+          <a [routerLink]="['/home']" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" class="nav-link">home</a>
         </li>
         <li class="nav-item">
-          <a [routerLink]="['/aboutUs']" class="nav-link">about us</a>
+          <a [routerLink]="['/aboutUs']" routerLinkActive="active" class="nav-link">about us</a>
         </li>
         <li class="nav-item">
-          <a [routerLink]="['/products']" class="nav-link">Shop</a>
+          <a [routerLink]="['/products']" routerLinkActive="active" class="nav-link">Shop</a>
         </li>
-        <!-- <li class="nav-item">
-          <a href="#team" class="nav-link">team</a>
-        </li> -->
         <li class="nav-item">
-          <a [routerLink]="['/contactUs']" class="nav-link">contact</a>
+          <a [routerLink]="['/contactUs']" routerLinkActive="active" class="nav-link">contact</a>
         </li>
       </ul>
     </div>

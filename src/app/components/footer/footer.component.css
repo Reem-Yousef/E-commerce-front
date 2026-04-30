@@ -176,3 +176,13 @@
         text-align: center;
     }
 }
+
+/* في ملف CSS الخاص بالـ Footer */
+._footerLinks .nav-link.active {
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 5px;
+  /* أو استخدمي border-bottom بدل underline */
+  /* border-bottom: 2px solid #000;
+  padding-bottom: 5px; */
+}
