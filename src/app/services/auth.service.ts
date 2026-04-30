@@ -16,9 +16,18 @@ export class AuthService {
   isAuthenticated(): boolean {
     return !!localStorage.getItem('token');
   }
+  // register(data: any): Observable<any> {
+  //   return this.http.post(`${this.baseUrl}/register`, data);
+  // }
   register(data: any): Observable<any> {
-    return this.http.post(`${this.baseUrl}/register`, data);
-  }
+  return this.http.post(`${this.baseUrl}/register`, data).pipe(
+    tap((response: any) => {
+      if (response.token) {
+        localStorage.setItem('token', response.token);
+      }
+    })
+  );
+}
 
   login(data: any): Observable<any> {
     return this.http.post(`${this.baseUrl}/login`, data).pipe(

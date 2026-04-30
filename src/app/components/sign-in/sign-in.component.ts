@@ -37,7 +37,7 @@ export class SignInComponent implements AfterViewInit {
             showConfirmButton: false,
             timer: 2000,
           });
-          this.router.navigate(['/dashboard']);
+          this.router.navigate(['/home']);
         },
         error: (err) => {
           console.log(err);

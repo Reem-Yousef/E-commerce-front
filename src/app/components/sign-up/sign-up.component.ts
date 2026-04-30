@@ -91,7 +91,7 @@ export class SignUpComponent implements AfterViewInit {
           showConfirmButton: false,
           timer: 2000,
         });
-        this.router.navigate(['/signin']);
+        this.router.navigate(['/home']);
       },
       error: (err) => {
         console.log(err);
