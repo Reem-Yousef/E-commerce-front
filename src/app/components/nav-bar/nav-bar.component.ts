@@ -35,6 +35,11 @@ export class NavBarComponent implements OnInit {
     });
   }
 
+isProfilePage(): boolean {
+  return this.router.url.includes('/dashboard') || 
+         this.router.url.includes('/profile') ||
+         this.router.url === '/dashboard';
+}
   closeNavbar() {
     const navbar = this.el.nativeElement.querySelector('#mainMenu');
     if (navbar.classList.contains('show')) {
